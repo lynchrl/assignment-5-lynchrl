@@ -1,0 +1,24 @@
+#!/bin/sh
+
+case "$1" in
+    start)
+        echo "Loading scull module"
+        /usr/sbin/scull_load
+        echo "Loading faulty module"
+        /usr/sbin/module_load faulty
+        echo "Loading hello module"
+        modprobe hello
+        ;;
+    stop)
+        echo "Removing hello module"
+        modprobe -r hello
+        echo "Removing faulty module"
+        /usr/sbin/module_unload faulty
+        echo "Removing scull module"
+        /usr/sbin/scull_unload
+        ;;
+    *)
+        echo "Usage: $0 (start|stop)"
+        exit 1
+        ;;
+esac
